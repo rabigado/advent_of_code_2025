@@ -29,10 +29,10 @@ if (!fs.existsSync(filePath)) {
 const puzzle = fs.readFileSync(filePath, "utf8");
 // console.log("puzzle", puzzle);
 const operations_calc = {
-    "+": (a,b)=>{ 
+    "+": (a,b)=>{
         console.log(`preforming ${a}+${b}`)
         return Number(a)+Number(b)},
-    "*": (a,b)=>{ 
+    "*": (a,b)=>{
         console.log(`preforming ${a}*${b}`)
         return Number(a)*Number(b)}
 }
@@ -53,14 +53,37 @@ function puzzle_1() {
     })
     console.log(total)
 }
+function spacesAfterEachItemWithIndex(str) {
+    const out = [];
+    const re = /(\S)(\s*)(?=\S|$)/g;
+
+    let m;
+    while ((m = re.exec(str)) !== null) {
+        out.push({
+            item: m[1],
+            index: m.index,
+            spacesToNextOrEnd: m[2].length
+        });
+    }
+
+    return out;
+}
 
 function puzzle_2() {
     const lines = puzzle.split('\n').reverse()
-        
+
     const operations = lines.splice(0,1)
-    
-    console.log(lines,operations)
+
     let total = 0;
+    let data = spacesAfterEachItemWithIndex(operations[0]);
+    console.log(data[0],lines[0].split("").reverse().slice(data[0].index,data[0].spacesToNextOrEnd-1))
+    //
+    data.forEach(o =>{
+        for(let i = o.spacesToNextOrEnd-1; i >= 0; i--){
+
+        }
+    })
+
     // operations.forEach((op,index)=>{
     //     const calc = operations_calc[op];
     //     let result = lines[0][index]
